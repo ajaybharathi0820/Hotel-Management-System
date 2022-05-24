@@ -1,0 +1,89 @@
+﻿
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/1.0.1/tailwind.min.css'>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+          rel="stylesheet" />
+    <script src="https://kit.fontawesome.com/cd8d557cb2.js" crossorigin="anonymous"></script>
+
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+    <style>
+        ul li:hover {
+            background-color: #f8b600;
+        }
+        .form-control:focus {
+            border: none;
+            border-color: #9333ea;
+            box-shadow: 0 0 6px #9333ea;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top  ">
+        <div class="container-fluid ">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar "></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button><div class="ml-16">
+    <a class="navbar-brand pull-left" href="@Url.Action( "Index", "Home")"><span><i class="fas fa-umbrella-beach mr-4"></i></span>Hotel Elite</a>
+</div>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <li>@Html.ActionLink("Bookings", "UserBookings", "Home")</li>
+}
+                    <li>@Html.ActionLink("About", "about", "home")</li>
+                    <li>@Html.ActionLink("Contact", "contact", "home")</li>
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <li>@Html.ActionLink("Dashboard", "Index", "Dashboard")</li>
+                    }
+                </ul>
+                @Html.Partial("_LoginPartial")
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+
+        <div class="list-group  col-md-2 col-sm-auto col-lg-2">
+            <h2 class="text-center" style="font-weight:bold">Dashboard</h2><hr />
+            <a class="list-group-item list-group-item-action list-group-item-light p-3" href="@Url.Action("Index", "Dashboard")"><span></span><i class="fas fa-hotel mr-3"></i><span></span>Manage Rooms</a>
+            <a class="list-group-item list-group-item-action list-group-item-light p-3" href="@Url.Action("Bookings", "ManageBookings", new { id = 0})"><span><i class="fas fa-user-tag mr-3"></i></span>User Bookings</a>
+            <a class="list-group-item list-group-item-action list-group-item-light p-3" href="@Url.Action("Bookings","ManageBookings",new {id=0,FilterManagementBookings=true })"><span><i class="fas fa-user-shield mr-3"></i></span>Management Bookings</a>
+            <a class="list-group-item list-group-item-action list-group-item-light p-3" href="@Url.Action("GetAll","User")"><span><i class="fas fa-users mr-3"></i></span>Users</a>
+
+
+        </div>
+
+
+        <div class="container col-md-10"> @RenderBody()</div>
+    </div>
+
+
+    <div style="bottom:0;position: fixed; width:100%;">
+        <hr style="width:100%;" />
+        <footer>
+            <p class="font-bold ml-16">&copy; @DateTime.Now.Year - Hotel Elite</p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/Scripts/jquery.validate.min.js")
+    @Scripts.Render("~/Scripts/jquery.validate.unobtrusive.min.js")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>
+

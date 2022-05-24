@@ -1,0 +1,70 @@
+﻿
+@model IEnumerable<HotelManagementWeb.Models.Room>
+@{
+    ViewBag.Title = "Dashboard";
+    Layout = "~/Views/Shared/DashboardLayoutView.cshtml";
+}
+
+
+
+<style>
+    .table td img {
+        width: 30px;
+        height: 29px;
+        border-radius: 100%;
+    }
+</style>
+
+
+
+
+
+
+<a class="btn btn-success" style="margin-top:10px" href="@Url.Action("AddRoom","Room")">Add Room</a>
+
+
+
+<table class="table table-responsive table-striped table-bordered "  style="margin-top:20px">
+    <tr>
+        <th>Room Number</th>
+        <th>Image</th>
+        <th>Type</th>
+        <th>Capacity</th>
+        <th>BookingStatus</th>
+        <th>Description</th>
+        <th>Price</th>
+        <th>Action</th>
+    </tr>
+
+    @foreach (var data in Model)
+    {
+<tr>
+  
+
+
+    <td>@data.RoomNumber</td>
+    @*<td><img src="data:image;base64,@Convert.ToBase64String(data.ImageByte)"></td>*@
+ 
+    <td><img src="Content/RoomImages/@data.RoomImage" /></td>
+    <td>@data.Type</td>
+    <td>@data.RoomCapacity</td>
+    <td>@data.Status</td>
+    <td>@data.RoomDescription</td>
+    <td>@data.RoomPrice</td>
+
+    
+    <td>
+        <a class="btn btn-primary btn-sm" style="margin-right:5px"  href="@Url.Action("EditRoom", "Room", @*new { Id = data.RoomId }*@  data)">Edit</a>
+        <a class="btn btn-danger btn-sm" data-toggle="modal" data-target="#@data.RoomId">Delete</a>
+    </td>
+
+    @{Html.RenderPartial("ConfirmDelete", data);
+    }
+
+</tr>
+
+
+    }
+</table>
+<br />
+
